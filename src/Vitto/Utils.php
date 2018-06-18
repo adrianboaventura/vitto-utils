@@ -5,6 +5,8 @@ class Utils
 {
     public static function validateSchema($schema, $data)
     {
+        $returnObj = new \stdClass();
+
         try {
             $req = [];
             foreach ($schema['required'] as $required) {
@@ -30,17 +32,14 @@ class Utils
 
                 }
             }*/
-            return [
-                'status' => true
-            ];
+            $returnObj->status = true;
 
         } catch (\Exception $exception) {
-            return [
-                'status' => false,
-                'message' => $exception->getMessage(),
-                'data' => $req
-            ];
+            $returnObj->status = false;
+            $returnObj->message = $exception->getMessage();
+            $returnObj->data = $req;
         }
+        return $returnObj;
     }
 
     public static function dynamicProperty($obj, $path_str)
