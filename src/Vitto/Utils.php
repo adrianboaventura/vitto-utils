@@ -8,6 +8,7 @@ class Utils
         $returnObj = new \stdClass();
 
         try {
+            // validate required fields
             $req = [];
             foreach ($schema['required'] as $required) {
                 foreach ($data as $fieldName => $item) {
@@ -20,6 +21,7 @@ class Utils
                 throw new \Exception('Required fields.');
             }
 
+            // validate required fields
             /*foreach ($data as $item) {
                 foreach ($item as $fieldName => $fieldValue) {
                     dd($schema['properties'][$fieldName]);
@@ -32,6 +34,7 @@ class Utils
 
                 }
             }*/
+
             $returnObj->success = true;
 
         } catch (\Exception $exception) {
