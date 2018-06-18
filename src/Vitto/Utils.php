@@ -32,10 +32,10 @@ class Utils
 
                 }
             }*/
-            $returnObj->status = true;
+            $returnObj->success = true;
 
         } catch (\Exception $exception) {
-            $returnObj->status = false;
+            $returnObj->success = false;
             $returnObj->message = $exception->getMessage();
             $returnObj->data = $req;
         }
