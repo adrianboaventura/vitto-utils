@@ -3,7 +3,7 @@ namespace Vitto;
 
 class Utils
 {
-    protected function validateSchema($schema, $data)
+    public static function validateSchema($schema, $data)
     {
         try {
             $req = [];
@@ -15,7 +15,7 @@ class Utils
                 }
             }
             if (count($req) > 0) {
-                throw new \Exception('Incorrect field.');
+                throw new \Exception('Required fields.');
             }
 
             /*foreach ($data as $item) {
@@ -23,26 +23,23 @@ class Utils
                     dd($schema['properties'][$fieldName]);
                 }
             }*/
-            foreach ($schema['properties'] as $field => $attributes) {
+            /*foreach ($schema['properties'] as $field => $attributes) {
                 dd($field);
                 dd(gettype($data[$field]));
                 if ($data[$field]) {
 
                 }
-            }
-
-        } catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            dd($exception->getMessage());
-            $aData = [
-                'exception' => [
-                    'service' => env('SERVICE_NAME'),
-                    'code' => '',
-                    'message' => $exception->getMessage()
-                ]
+            }*/
+            return [
+                'status' => true
             ];
 
-            return $this->requestToDbService($aData);
+        } catch (\Exception $exception) {
+            return [
+                'status' => false,
+                'message' => $exception->getMessage(),
+                'data' => $req
+            ];
         }
     }
 
