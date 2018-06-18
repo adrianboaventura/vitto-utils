@@ -10,8 +10,8 @@
     ],
     "repositories": [
         {
-            "type": "vcs",
-            "url":  "git@bitbucket.org:adrianboaventura/vitto-utils.git"
+            "type": "git",
+            "url":  "https://bitbucket.org/adrianboaventura/vitto-utils.git"
         }
     ],
     "minimum-stability": "dev",
