@@ -1,0 +1,15 @@
+{
+    "name": "vitto/vitto-utils",
+    "description": "Utils for Vitto System",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Rafa Alves",
+            "email": "desenvolvimento1@sistemavitto.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0"
+    }
+}
