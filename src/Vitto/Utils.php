@@ -9,16 +9,18 @@ class Utils
 
         try {
             // validate required fields
-            $req = [];
-            foreach ($schema['required'] as $required) {
-                foreach ($data as $fieldName => $item) {
-                    if (!in_array($required, array_keys($item))) {
-                        $req[$required] = $required;
+            if (!empty($schema['required'])) {
+                $req = [];
+                foreach ($schema['required'] as $required) {
+                    foreach ($data as $fieldName => $item) {
+                        if (!in_array($required, array_keys($item))) {
+                            $req[$required] = $required;
+                        }
                     }
                 }
-            }
-            if (count($req) > 0) {
-                throw new \Exception('Required fields.');
+                if (count($req) > 0) {
+                    throw new \Exception('Required fields.');
+                }
             }
 
             // validate required fields

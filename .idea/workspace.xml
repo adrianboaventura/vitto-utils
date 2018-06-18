@@ -19,8 +19,8 @@
       <file leaf-file-name="Utils.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Vitto/Utils.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2934">
-              <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
+            <state relative-caret-position="180">
+              <caret line="13" column="23" lean-forward="true" selection-end-line="175" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -94,7 +94,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../vitto-catalog" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
@@ -121,12 +121,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1529322210193</updated>
-      <workItem from="1529322213048" duration="6858000" />
+      <workItem from="1529322213048" duration="7844000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6858000" />
+    <option name="totallyTimeSpent" value="7844000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1965" y="108" width="1321" height="743" extended-state="6" />
@@ -174,8 +174,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Vitto/Utils.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2934">
-          <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
+        <state relative-caret-position="180">
+          <caret line="13" column="23" lean-forward="true" selection-end-line="175" selection-end-column="1" />
         </state>
       </provider>
     </entry>
