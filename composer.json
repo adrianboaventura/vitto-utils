@@ -8,12 +8,6 @@
             "email": "desenvolvimento1@sistemavitto.com.br"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url":  "https://bitbucket.org/adrianboaventura/vitto-utils.git"
-        }
-    ],
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0"
