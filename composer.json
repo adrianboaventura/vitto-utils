@@ -11,5 +11,10 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Vitto": "src/"
+        }
     }
 }
