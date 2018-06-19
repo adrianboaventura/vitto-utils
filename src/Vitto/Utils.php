@@ -1,8 +1,16 @@
 <?php
 namespace Vitto;
 
+use GuzzleHttp\Client;
+
 class Utils
 {
+    const ENVIROMENT = [
+        'development' => 'http://vitto-%service%.local/v1/%method%',
+        'staging' => '',
+        'production' => '',
+    ];
+
     public static function validateSchema($schema, $data)
     {
         $returnObj = new \stdClass();
@@ -172,5 +180,23 @@ class Utils
             $dateTime->modify($times[$timezone]);
         }
         return $dateTime;
+    }
+
+    /**
+     * @param $service
+     * @param $method
+     * @param null $data
+     * @param string $env
+     * @param null $domain
+     * @return mixed
+     */
+    public static function requestServiceMethod($service, $method, $data = null, $env = 'development', $domain = null)
+    {
+        $client = new Client();
+        $response = $client->post($domain ?? str_replace(['%service%', '%method%'], [$service, $method], self::ENVIROMENT[$env]),
+            ['json' => $data]
+        );
+
+        return json_decode($response->getBody()->getContents());
     }
 }
