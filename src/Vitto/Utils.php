@@ -259,7 +259,7 @@ class Utils
      * @param null $uri
      * @return mixed|string
      */
-    public function requestToDbService($data = null, $method = 'post', $uri = null)
+    public static function requestToDbService($data = null, $method = 'post', $uri = null)
     {
         try {
             $client = new Client();
