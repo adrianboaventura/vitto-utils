@@ -150,7 +150,7 @@ class Utils
 
     public static function timezoneAlign($ufState, $time, $revert = false) {
 
-        $timezone = self::getTimeZone($ufState, $time);
+        $timezone = self::getTimeZone(strtoupper($ufState), $time);
 
         if (!$revert) {
             /*  Horário base -> horário real  */
@@ -180,6 +180,105 @@ class Utils
             $dateTime->modify($times[$timezone]);
         }
         return $dateTime;
+    }
+
+    public static function onTime($now, $opentime, $arrayExceptions = null)
+    {
+
+        $todayDate = $now->format("Y-m-d");
+        $timeNow = $now->format('H:i');
+        $todayDay = $now->format('w');
+
+        $yesterday = $now->modify('-1 day');
+        $yesterdayDate = $yesterday->format("Y-m-d");
+        $yesterdayDay = $yesterday->format('w');
+
+        $open = false;
+        $isExtra ='';
+
+        if (!is_array($opentime)) {
+            $arrayTimes = json_decode($opentime);
+        } else {
+            $arrayTimes = $opentime;
+        }
+
+        foreach ($arrayTimes[$todayDay] as $key => $value){
+            if (!empty($value->extra) && strcmp($value->extra, $timeNow) > 0){
+                $isExtra = $value->extra;
+                $open = true;
+            }
+
+            if ($value->active == 1){
+                if ($value->close < $value->open ){
+                    $value->close = '23:59';
+                }
+
+                if ($timeNow >= $value->open and $timeNow <= $value->close) {
+                    $open = true;
+                }
+            }
+        }
+        /* Verifica Exceções */
+        if (!empty($arrayExceptions)){
+            foreach ($arrayExceptions as $key => $exception) {
+                $exceptionTimes = json_decode($exception->times);
+
+                if ($exception->date == $yesterdayDate){
+                    if ($exception->status == 'Fechado' AND $isExtra){
+                        $open = false;
+                    }elseif ($exception->status == 'Aberto'){
+                        foreach ($exceptionTimes as $key => $period) {
+                            if ($period->extra >= $timeNow) {
+                                $open = true;
+                            }
+                        }
+                    }
+                }else{
+                    if ($exception->status == 'Fechado'){
+                        $open = false;
+                    }else{
+                        foreach ($exceptionTimes as $key => $period) {
+                            if ($period->close < $period->open ){
+                                $period->close = '23:59';
+                            }
+                            if ($timeNow >= $period->open and $timeNow <= $period->close) {
+                                $open = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $open;
+    }
+
+    /**
+     * @param null $data
+     * @param string $method
+     * @param null $uri
+     * @return mixed|string
+     */
+    public function requestToDbService($data = null, $method = 'post', $uri = null)
+    {
+        try {
+            $client = new Client();
+            $response = $client->{$method}(!empty($uri) ? $uri : env('URL_API_SERVICE_DB'),
+                ['json' => $data]
+            );
+
+            return json_decode($response->getBody()->getContents());
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+            return json_encode([
+                'response' => [
+                    'code' => 400,
+                    'errors' => [
+                        'Empty Response'
+                    ]
+                ]
+            ]);
+        }
     }
 
     /**
