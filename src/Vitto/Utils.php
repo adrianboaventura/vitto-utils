@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 class Utils
 {
     const ENVIROMENT = [
-        'development' => 'http://vitto-%service%.lssocal/v1/%method%',
+        'local' => 'http://vitto-%service%.local/v1/%method%',
         'staging' => '',
         'production' => '',
     ];
@@ -290,11 +290,15 @@ class Utils
      * @param null $domain
      * @return mixed
      */
-    public static function requestServiceMethod($service, $method, $data = null, $env = 'development', $domain = null)
+    public static function requestServiceMethod($service, $method, $data = null, $domain = null)
     {
         try {
+            if (empty($domain)) {
+                $domain = self::ENVIROMENT[env('APP_ENV')];
+            }
+
             $client = new Client();
-            $response = $client->post(str_replace(['%service%', '%method%'], [$service, $method], $domain) ?? str_replace(['%service%', '%method%'], [$service, $method], self::ENVIROMENT[$env]),
+            $response = $client->post(str_replace(['%service%', '%method%'], [$service, $method], $domain),
                 ['json' => $data]
             );
 
