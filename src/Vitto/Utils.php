@@ -2,11 +2,12 @@
 namespace Vitto;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Log;
 
 class Utils
 {
     const ENVIROMENT = [
-        'development' => 'http://vitto-%service%.local/v1/%method%',
+        'development' => 'http://vitto-%service%.lssocal/v1/%method%',
         'staging' => '',
         'production' => '',
     ];
@@ -291,11 +292,15 @@ class Utils
      */
     public static function requestServiceMethod($service, $method, $data = null, $env = 'development', $domain = null)
     {
-        $client = new Client();
-        $response = $client->post($domain ?? str_replace(['%service%', '%method%'], [$service, $method], self::ENVIROMENT[$env]),
-            ['json' => $data]
-        );
+        try {
+            $client = new Client();
+            $response = $client->post(str_replace(['%service%', '%method%'], [$service, $method], $domain) ?? str_replace(['%service%', '%method%'], [$service, $method], self::ENVIROMENT[$env]),
+                ['json' => $data]
+            );
 
-        return json_decode($response->getBody()->getContents());
+            return json_decode($response->getBody()->getContents());
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
     }
 }
