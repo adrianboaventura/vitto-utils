@@ -2,13 +2,15 @@
 namespace Vitto;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
 
 class Utils
 {
     const ENVIROMENT = [
         'local' => 'http://vitto-%service%.local/v1/%method%',
-        'staging' => '',
+        'homol' => 'http://homol.api.%service%.vtto.com.br/v1/%method%',
         'production' => '',
     ];
 
@@ -269,6 +271,19 @@ class Utils
             );
 
             return json_decode($response->getBody()->getContents());
+        } catch (RequestException $e) {
+            Log::error(Psr7\str($e->getRequest()));
+            if ($e->hasResponse()) {
+                Log::error(Psr7\str($e->getResponse()));
+            }
+            return json_encode([
+                'response' => [
+                    'code' => 400,
+                    'errors' => [
+                        'Empty Response'
+                    ]
+                ]
+            ]);
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
             return json_encode([
