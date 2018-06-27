@@ -322,4 +322,13 @@ class Utils
             Log::error($exception->getMessage());
         }
     }
+
+    /**
+     * Gera o Hash de password padrão do FUELPHP
+     * @param type $string
+     * @return type
+     */
+    public static function createPassword($string) {
+        return base64_encode(hash_pbkdf2('sha256', $string, 'put_your_salt_here', 10000, 32, true));
+    }
 }
