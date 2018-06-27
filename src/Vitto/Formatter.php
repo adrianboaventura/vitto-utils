@@ -15,4 +15,16 @@ class Formatter
     {
         $string = $prefix . number_format($number, $decimals, $decPoints, $thousandsSep);
     }
+
+    public static function stringToFraction($input)
+    {
+        if (strlen($input) == 1) {
+            return floatval($input);
+        }
+
+        preg_match('/^(?P<numerator>\d+)\/(?P<denominator>\d+)$/', $input, $fraction);
+        $result = $fraction['numerator']/$fraction['denominator'];
+
+        return $result;
+    }
 }
