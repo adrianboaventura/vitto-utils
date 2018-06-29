@@ -16,7 +16,7 @@ class Formatter
         $string = $prefix . number_format($number, $decimals, $decPoints, $thousandsSep);
     }
 
-    public static function stringToFraction($input)
+    public static function rationalToFraction($input)
     {
         if (strlen($input) == 1) {
             return floatval($input);
@@ -26,5 +26,20 @@ class Formatter
         $result = $fraction['numerator']/$fraction['denominator'];
 
         return $result;
+    }
+
+    public static function fractionToRational($float, $precision = 2)
+    {
+        $stop  = 0;
+        $count = 2;
+        while ($stop == 0) {
+            $num = round(($float * $count), $precision);
+            if (ctype_digit(strval($num))) {
+                $rat  = $num . "/" . $count;
+                $stop = 1;
+            }
+            $count++;
+        }
+        return $rat;
     }
 }
