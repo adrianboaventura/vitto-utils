@@ -331,4 +331,33 @@ class Utils
     public static function createPassword($string) {
         return base64_encode(hash_pbkdf2('sha256', $string, 'put_your_salt_here', 10000, 32, true));
     }
+
+    public static function getUserByHash($hash, $service = 'account')
+    {
+        try {
+            $domain = self::ENVIROMENT[env('APP_ENV')];
+            $method = 'get-user';
+            $data = [
+                'client' => 'cardapio',
+                'request' => [
+                    'data' => [
+                        'x-user-key' => $hash
+                    ]
+                ]
+            ];
+
+            $client = new Client();
+            $response = $client->post(str_replace(['%service%', '%method%'], [$service, $method], $domain),
+                ['json' => $data]
+            );
+
+            $oResponse = json_decode($response->getBody()->getContents());
+
+            $oUser = $oResponse->response->data;
+
+            return $oUser;
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+    }
 }
