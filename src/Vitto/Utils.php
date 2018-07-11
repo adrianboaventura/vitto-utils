@@ -266,7 +266,7 @@ class Utils
     {
         try {
             $client = new Client();
-            $response = $client->{$method}(!empty($uri) ? $uri : env('URL_API_SERVICE_DB'),
+            $response = $client->{$method}(!empty($uri) ? $uri : env('URL_API_SERVICE_DB', 'http://homol.api.db.vtto.com.br/api/v1'),
                 ['json' => $data]
             );
 
