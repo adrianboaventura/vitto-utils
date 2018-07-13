@@ -332,7 +332,7 @@ class Utils
         return base64_encode(hash_pbkdf2('sha256', $string, 'put_your_salt_here', 10000, 32, true));
     }
 
-    public static function getUserByHash($hash, $client = 'cardapio')
+    public static function getUserByHash($hash, $client = 'cardapio', $service = 'account')
     {
         try {
             $domain = self::ENVIROMENT[env('APP_ENV')];
@@ -347,7 +347,7 @@ class Utils
             ];
 
             $client = new Client();
-            $response = $client->post(str_replace(['%service%', '%method%'], ['account', $method], $domain),
+            $response = $client->post(str_replace(['%service%', '%method%'], [$service, $method], $domain),
                 ['json' => $data]
             );
 
