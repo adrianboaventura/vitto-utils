@@ -187,14 +187,8 @@ class Utils
 
     public static function onTime($now, $opentime, $arrayExceptions = null)
     {
-
-        $todayDate = $now->format("Y-m-d");
         $timeNow = $now->format('H:i');
         $todayDay = $now->format('w');
-
-        $yesterday = $now->modify('-1 day');
-        $yesterdayDate = $yesterday->format("Y-m-d");
-        $yesterdayDay = $yesterday->format('w');
 
         $open = false;
         $isExtra ='';
