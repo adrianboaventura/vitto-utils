@@ -216,7 +216,7 @@ class Utils
                     $value->close = '23:59';
                 }
 
-                if ($timeNow >= $value->open and $timeNow <= $value->close) {
+                if ($value->open >= $timeNow && $timeNow <= $value->close) {
                     $open = true;
                 }
             }
