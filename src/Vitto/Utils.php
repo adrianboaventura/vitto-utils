@@ -389,7 +389,7 @@ class Utils
                         }
                     }
                 }
-                
+
                 if ($oddNodes == true) {
                     return $deliveryAreas;
                 }

@@ -13,7 +13,7 @@ class Formatter
 
     public static function moneyToString($number, $decimals = 2, $decPoints = ',', $thousandsSep = '.', $prefix = '')
     {
-        $string = $prefix . number_format($number, $decimals, $decPoints, $thousandsSep);
+        return $prefix . number_format($number, $decimals, $decPoints, $thousandsSep);
     }
 
     public static function rationalToFraction($input)

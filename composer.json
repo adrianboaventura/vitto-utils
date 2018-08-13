@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "vitto/vitto-utils": "dev-master"
     },
     "autoload": {
         "psr-0": {
