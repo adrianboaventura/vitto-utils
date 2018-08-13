@@ -354,4 +354,49 @@ class Utils
             Log::error($exception->getMessage());
         }
     }
+
+    public static function findDeliveryarea($points, $deliveryAreas) {
+        try {
+            if (empty($deliveryAreas)) {
+                return false;
+            }
+
+            if ($points[0] == 'x' OR $points[1] == 'x')
+            {
+                return end($deliveryAreas);
+            }
+
+            foreach ($deliveryAreas as $key => $value) {
+                $polygon = json_decode ($value->geolocation);
+                $polygon = $polygon[0];
+
+                if($polygon[0] != $polygon[count($polygon)-1]){
+                    $polygon[count($polygon)] = $polygon[0];
+                }
+                $j = 0;
+                $oddNodes = false;
+                $x = $points[1];
+                $y = $points[0];
+                $n = count($polygon);
+                for ($i = 0; $i < $n; $i++) {
+                    $j++;
+                    if ($j == $n) {
+                        $j = 0;
+                    }
+                    if ((($polygon[$i]->lat < $y) && ($polygon[$j]->lat >= $y)) || (($polygon[$j]->lat < $y) && ($polygon[$i]->lat >= $y))) {
+                        if ($polygon[$i]->lng + ($y - $polygon[$i]->lat) / ($polygon[$j]->lat - $polygon[$i]->lat) * ($polygon[$j]->lng - $polygon[$i]->lng) < $x) {
+                            $oddNodes = !$oddNodes;
+                        }
+                    }
+                }
+                
+                if ($oddNodes == true) {
+                    return $deliveryAreas;
+                }
+            }
+
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage());
+        }
+    }
 }
