@@ -355,10 +355,10 @@ class Utils
         }
     }
 
-    public static function findDeliveryarea($points, $deliveryAreas) {
+    public static function findDeliveryArea($points, $deliveryAreas) {
         try {
             if (empty($deliveryAreas)) {
-                return false;
+                return [];
             }
 
             if ($points[0] == 'x' OR $points[1] == 'x')
@@ -374,7 +374,7 @@ class Utils
                     $polygon[count($polygon)] = $polygon[0];
                 }
                 $j = 0;
-                $oddNodes = false;
+
                 $x = $points[1];
                 $y = $points[0];
                 $n = count($polygon);
@@ -385,14 +385,13 @@ class Utils
                     }
                     if ((($polygon[$i]->lat < $y) && ($polygon[$j]->lat >= $y)) || (($polygon[$j]->lat < $y) && ($polygon[$i]->lat >= $y))) {
                         if ($polygon[$i]->lng + ($y - $polygon[$i]->lat) / ($polygon[$j]->lat - $polygon[$i]->lat) * ($polygon[$j]->lng - $polygon[$i]->lng) < $x) {
-                            $oddNodes = !$oddNodes;
+                            return $value;
+                            break;
                         }
                     }
                 }
 
-                if ($oddNodes == true) {
-                    return $deliveryAreas;
-                }
+                return [];
             }
 
         } catch (\Exception $exception) {
