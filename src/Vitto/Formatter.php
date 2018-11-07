@@ -18,7 +18,7 @@ class Formatter
 
     public static function rationalToFraction($input)
     {
-        if (strlen($input) == 1) {
+        if (strpos($input, '/') === false) {
             return floatval($input);
         }
 
