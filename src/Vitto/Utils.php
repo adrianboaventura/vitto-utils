@@ -11,7 +11,7 @@ class Utils
     const ENVIROMENT = [
         'local' => 'http://vitto-%service%.local/v1/%method%',
         'homol' => 'http://homol.api.%service%.vtto.com.br/v1/%method%',
-        'production' => '',
+        'production' => 'http://api.%service%.vtto.com.br/v1/%method%',
     ];
 
     public static function validateSchema($schema, $data)
