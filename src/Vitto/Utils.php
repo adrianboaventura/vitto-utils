@@ -81,7 +81,7 @@ class Utils
     /* Verifica se esta no horário brasileiro de verao */
 
     public static function isSummerTime($datetime = '') {
-        $year = 2017; //Horario de verão em vigor
+        $year = 2018; //Horario de verão em vigor
         $summertime = array(
             '2017' => array('begin' => '2017-10-15', 'end' => '2018-02-17'),
             '2018' => array('begin' => '2018-11-04', 'end' => '2019-02-16')
