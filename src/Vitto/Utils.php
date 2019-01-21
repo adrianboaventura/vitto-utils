@@ -34,20 +34,6 @@ class Utils
                 }
             }
 
-            // validate required fields
-            /*foreach ($data as $item) {
-                foreach ($item as $fieldName => $fieldValue) {
-                    dd($schema['properties'][$fieldName]);
-                }
-            }*/
-            /*foreach ($schema['properties'] as $field => $attributes) {
-                dd($field);
-                dd(gettype($data[$field]));
-                if ($data[$field]) {
-
-                }
-            }*/
-
             $returnObj->success = true;
 
         } catch (\Exception $exception) {
