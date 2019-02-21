@@ -153,7 +153,7 @@ class Utils
 
     public static function timezoneAlign($ufState, $time, $revert = false) {
 
-        $timezone = self::getTimeZone(strtoupper($ufState), $time);
+        $timezone = self::getTimeZone(strtoupper($ufState ?? 'SP'), $time);
 
         if (!$revert) {
             /*  Horário base -> horário real  */
