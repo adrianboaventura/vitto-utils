@@ -384,4 +384,14 @@ class Utils
             Log::error($exception->getMessage());
         }
     }
+
+    /* Truncar n casas decimais em um float. */
+    public static function truncate($fFloat, $iDecimals="0")
+    {
+        if(($cPos = strpos($fFloat, '.')) !== false) {
+            $fFloat = floatval(substr($fFloat, 0, $cPos + 1 + $iDecimals));
+        }
+        return $fFloat;
+    }
+
 }
