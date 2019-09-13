@@ -171,7 +171,7 @@ class Utils
         return $dateTime;
     }
 
-    public static function onTime($now, $opentime, $arrayExceptions = null)
+    public static function onTime2($now, $opentime, $arrayExceptions = null)
     {
         $timeNow = $now->format('H:i');
         $todayDay = $now->format('w');
@@ -234,6 +234,75 @@ class Utils
         }
 
         return $open;
+    }
+
+    public static function onTime($now, $opentime, $arrayExceptions = null) {
+        try {
+            $onTime     = true;
+            $timeNow    = $now->format('H:i');
+            $todayDay   = $now->format('w');
+            $isExtra    = '';
+            $arrayTimes = !empty(!is_array($opentime)) && !is_array($opentime) ? json_decode($opentime) : $opentime;
+
+            foreach ($arrayTimes[$todayDay] as $key => $value) {
+                if (!empty($value->extra) && strcmp($value->extra, $timeNow) > 0) {
+                    $isExtra = $value->extra;
+                    $onTime  = true;
+                }
+
+                if ($value->active == 1) {
+                    if ($value->close < $value->open) {
+                        $value->close = '23:59';
+                    }
+
+                    if ($timeNow < $value->open || $timeNow > $value->close) {
+                        $onTime = false;
+                    }
+                }
+            }
+            /* Verifica Exceções */
+            if (!empty($arrayExceptions)) {
+                foreach ($arrayExceptions as $key => $exception) {
+                    $exceptionTimes = json_decode($exception->times);
+
+                    if ($exception->date == $yesterdayDate) {
+                        if ($exception->status == 'Fechado' && $isExtra) {
+                            $onTime = false;
+                        }
+                        elseif ($exception->status == 'Aberto') {
+                            foreach ($exceptionTimes as $key => $period) {
+                                if ($period->extra >= $timeNow) {
+                                    $onTime = true;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        if ($exception->status == 'Fechado') {
+                            $onTime = false;
+                        }
+                        else {
+                            foreach ($exceptionTimes as $key => $period) {
+                                if ($period->close < $period->open) {
+                                    $period->close = '23:59';
+                                }
+                                if ($timeNow >= $period->open and $timeNow <= $period->close) {
+                                    $onTime = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            /**/
+
+            return $onTime;
+        }
+        catch (\Exception $exc) {
+            \Log::error($exc->getTraceAsString());
+            return false;
+        }
+
     }
 
     /**
