@@ -171,7 +171,7 @@ class Utils
         return $dateTime;
     }
 
-    public static function onTime2($now, $opentime, $arrayExceptions = null)
+    public static function onTime($now, $opentime, $arrayExceptions = null)
     {
         $timeNow = $now->format('H:i');
         $todayDay = $now->format('w');
@@ -236,7 +236,7 @@ class Utils
         return $open;
     }
 
-    public static function onTime($now, $opentime, $arrayExceptions = null) {
+    public static function onTime2($now, $opentime, $arrayExceptions = null) {
         try {
             $onTime     = true;
             $timeNow    = $now->format('H:i');
