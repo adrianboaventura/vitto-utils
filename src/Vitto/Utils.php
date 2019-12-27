@@ -207,13 +207,14 @@ class Utils
                 $exceptionTimes = json_decode($exception->times);
                 if ($exception->status == 'Fechado'){
                     $open = false;
-                }else{
-                    foreach ($exceptionTimes as $key => $period) {
-                        if ($period->close < $period->open ){
-                            $period->close = '23:59';
-                        }
-                        if ($timeNow >= $period->open and $timeNow <= $period->close) {
-                            $open = true;
+                    if(!empty($exceptionTimes)){
+                        foreach ($exceptionTimes as $key => $period) {
+                            if ($period->close < $period->open ){
+                                $period->close = '23:59';
+                            }
+                            if ($timeNow >= $period->open and $timeNow <= $period->close) {
+                                $open = true;
+                            }
                         }
                     }
                 }
