@@ -205,28 +205,15 @@ class Utils
         if (!empty($arrayExceptions)){
             foreach ($arrayExceptions as $key => $exception) {
                 $exceptionTimes = json_decode($exception->times);
-
-                if ($exception->date == $yesterdayDate){
-                    if ($exception->status == 'Fechado' AND $isExtra){
-                        $open = false;
-                    }elseif ($exception->status == 'Aberto'){
-                        foreach ($exceptionTimes as $key => $period) {
-                            if ($period->extra >= $timeNow) {
-                                $open = true;
-                            }
-                        }
-                    }
+                if ($exception->status == 'Fechado'){
+                    $open = false;
                 }else{
-                    if ($exception->status == 'Fechado'){
-                        $open = false;
-                    }else{
-                        foreach ($exceptionTimes as $key => $period) {
-                            if ($period->close < $period->open ){
-                                $period->close = '23:59';
-                            }
-                            if ($timeNow >= $period->open and $timeNow <= $period->close) {
-                                $open = true;
-                            }
+                    foreach ($exceptionTimes as $key => $period) {
+                        if ($period->close < $period->open ){
+                            $period->close = '23:59';
+                        }
+                        if ($timeNow >= $period->open and $timeNow <= $period->close) {
+                            $open = true;
                         }
                     }
                 }
