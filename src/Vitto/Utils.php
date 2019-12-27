@@ -207,6 +207,7 @@ class Utils
                 $exceptionTimes = json_decode($exception->times);
                 if ($exception->status == 'Fechado'){
                     $open = false;
+                } else {
                     if(!empty($exceptionTimes)){
                         foreach ($exceptionTimes as $key => $period) {
                             if ($period->close < $period->open ){
@@ -217,6 +218,7 @@ class Utils
                             }
                         }
                     }
+                }
                 }
             }
         }
