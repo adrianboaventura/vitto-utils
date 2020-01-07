@@ -185,22 +185,25 @@ class Utils
             $arrayTimes = $opentime;
         }
 
-        foreach ($arrayTimes[$todayDay] as $key => $value){
-            if (!empty($value->extra) && strcmp($value->extra, $timeNow) > 0){
-                $isExtra = $value->extra;
-                $open = true;
-            }
-
-            if ($value->active == 1){
-                if ($value->close < $value->open ){
-                    $value->close = '23:59';
+        if(!empty($arrayTimes[$todayDay])) {
+            foreach ($arrayTimes[$todayDay] as $key => $value){
+                if (!empty($value->extra) && strcmp($value->extra, $timeNow) > 0){
+                    $isExtra = $value->extra;
+                    $open = true;
                 }
 
-                if ($timeNow >= $value->open and $timeNow <= $value->close) {
-                    $open = true;
+                if ($value->active == 1){
+                    if ($value->close < $value->open ){
+                        $value->close = '23:59';
+                    }
+
+                    if ($timeNow >= $value->open and $timeNow <= $value->close) {
+                        $open = true;
+                    }
                 }
             }
         }
+        
         /* Verifica Exceções */
         if (!empty($arrayExceptions)){
             foreach ($arrayExceptions as $key => $exception) {
