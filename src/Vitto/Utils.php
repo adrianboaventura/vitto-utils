@@ -207,12 +207,17 @@ class Utils
         /* Verifica Exceções */
         if (!empty($arrayExceptions)){
             foreach ($arrayExceptions as $key => $exception) {
+                $currentDate = date('Y-m-d');
+                if ( $currentDate != $exception->date ) {
+                    continue;
+                }
+
                 $exceptionTimes = json_decode($exception->times);
-                if ($exception->status == 'Fechado'){
+                if ($exception->status == 'Fechado') {
                     $open = false;
-                }else{
+                } else {
                     foreach ($exceptionTimes as $key => $period) {
-                        if ($period->close < $period->open ){
+                        if ($period->close < $period->open ) {
                             $period->close = '23:59';
                         }
                         if ($timeNow >= $period->open and $timeNow <= $period->close) {
